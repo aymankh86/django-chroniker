@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 from datetime import datetime
+from distutils.version import StrictVersion
 
 from django import forms
 from django.conf import settings
@@ -10,7 +11,13 @@ from django.core.management import get_commands
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.forms import TextInput
-from django.forms.util import flatatt
+
+import django
+DJANGO_VERSION = StrictVersion(django.get_version())
+if DJANGO_VERSION >= StrictVersion('1.8'):
+    from django.forms.utils import flatatt
+else:
+    from django.forms.util import flatatt
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.encoding import force_text
